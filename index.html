@@ -6,7 +6,6 @@
 <title>AnimeVerse</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -25,6 +24,7 @@ padding:15px;
 text-align:center;
 position:sticky;
 top:0;
+z-index:100;
 }
 
 header h1{
@@ -59,16 +59,11 @@ gap:12px;
 background:#1e293b;
 border-radius:12px;
 overflow:hidden;
-transition:.3s;
-}
-
-.card:hover{
-transform:translateY(-3px);
 }
 
 .card img{
 width:100%;
-height:220px;
+height:180px;
 object-fit:cover;
 display:block;
 }
@@ -78,7 +73,7 @@ padding:10px;
 }
 
 .card h3{
-font-size:18px;
+font-size:16px;
 margin-bottom:5px;
 }
 
@@ -95,7 +90,8 @@ border:none;
 border-radius:8px;
 background:#ef4444;
 color:white;
-font-size:15px;
+font-size:14px;
+cursor:pointer;
 }
 
 .rankings{
@@ -113,29 +109,28 @@ footer{
 text-align:center;
 padding:25px;
 color:#94a3b8;
+margin-top:20px;
 }
 
 @media(max-width:480px){
-.card img{
-height:180px;
-}
-
 .section-title{
 font-size:24px;
 }
+
+.card img{
+height:160px;
 }
-
+}
 </style>
-</head>
 
+</head>
 <body>
 
 <header>
 <h1>🎭 AnimeVerse</h1>
 </header>
 
-<div class="cards" id="animeContainer">
-</div>
+<div class="container">
 
 <input
 type="text"
@@ -145,8 +140,7 @@ placeholder="🔍 Search Anime..."
 
 <h2 class="section-title">🔥 Popular Anime</h2>
 
-<div class="cards" id="animeContainer">
-</div>
+<div class="cards">
 
 <div class="card">
 <img src="https://picsum.photos/400/600?1">
