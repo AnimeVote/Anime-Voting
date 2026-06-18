@@ -41,12 +41,12 @@ padding:14px;
 border:none;
 border-radius:10px;
 font-size:16px;
-margin-bottom:20px;
+margin-bottom:10px;
 }
 
 .section-title{
 font-size:28px;
-margin-bottom:15px;
+margin:20px 0 15px;
 }
 
 .cards{
@@ -63,7 +63,7 @@ overflow:hidden;
 
 .card img{
 width:100%;
-height:180px;
+height:220px;
 object-fit:cover;
 display:block;
 }
@@ -80,7 +80,7 @@ margin-bottom:5px;
 .info{
 font-size:13px;
 color:#cbd5e1;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .btn{
@@ -92,6 +92,7 @@ background:#ef4444;
 color:white;
 font-size:14px;
 cursor:pointer;
+margin-bottom:10px;
 }
 
 .rankings{
@@ -113,17 +114,13 @@ margin-top:20px;
 }
 
 @media(max-width:480px){
-.section-title{
-font-size:24px;
-}
-
 .card img{
 height:160px;
 }
 }
 </style>
-
 </head>
+
 <body>
 
 <header>
@@ -134,20 +131,24 @@ height:160px;
 
 <input
 type="text"
+id="searchBox"
 class="search"
 placeholder="🔍 Search Anime..."
 >
 
+<button class="btn" onclick="searchAnime()">
+Search
+</button>
+
 <h2 class="section-title">🔥 Popular Anime</h2>
 
-<div class="cards">
+<div class="cards" id="animeResults">
 
 <div class="card">
 <img src="https://picsum.photos/400/600?1">
 <div class="card-content">
 <h3>One Piece</h3>
 <p class="info">Episodes: 1120+</p>
-<button class="btn">View Details</button>
 </div>
 </div>
 
@@ -156,7 +157,6 @@ placeholder="🔍 Search Anime..."
 <div class="card-content">
 <h3>Naruto</h3>
 <p class="info">Episodes: 220</p>
-<button class="btn">View Details</button>
 </div>
 </div>
 
@@ -165,7 +165,6 @@ placeholder="🔍 Search Anime..."
 <div class="card-content">
 <h3>Attack on Titan</h3>
 <p class="info">Episodes: 89</p>
-<button class="btn">View Details</button>
 </div>
 </div>
 
@@ -174,7 +173,6 @@ placeholder="🔍 Search Anime..."
 <div class="card-content">
 <h3>Death Note</h3>
 <p class="info">Episodes: 37</p>
-<button class="btn">View Details</button>
 </div>
 </div>
 
@@ -196,6 +194,51 @@ placeholder="🔍 Search Anime..."
 <footer>
 AnimeVerse © 2026
 </footer>
+
+<script>
+async function searchAnime(){
+
+const animeName = document.getElementById("searchBox").value;
+
+if(!animeName){
+alert("Enter anime name");
+return;
+}
+
+try{
+
+const response = await fetch(
+`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(animeName)}&limit=1`
+);
+
+const data = await response.json();
+
+if(!data.data || data.data.length === 0){
+alert("Anime not found");
+return;
+}
+
+const anime = data.data[0];
+
+document.getElementById("animeResults").innerHTML = `
+<div class="card">
+<img src="${anime.images.jpg.large_image_url}">
+<div class="card-content">
+<h3>${anime.title}</h3>
+<p class="info">⭐ Score: ${anime.score || "N/A"}</p>
+<p class="info">📺 Episodes: ${anime.episodes || "Unknown"}</p>
+<p class="info">📅 Year: ${anime.year || "Unknown"}</p>
+</div>
+</div>
+`;
+
+}catch(error){
+alert("Error loading anime");
+console.error(error);
+}
+
+}
+</script>
 
 </body>
 </html>
